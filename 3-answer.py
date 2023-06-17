@@ -2,6 +2,14 @@ import streamlit as st
 import pandas as pd
 import emoji
 
+def home_page():
+    st.title(emoji.emojize('Welcome to CPG Brand - Manufacturer Matching App :factory:'))
+    # Add an image
+    st.image('https://meetpitsy.com/collections/products/products/lavender-clove-bud-relaxing-spice', caption='Image caption', use_column_width=True)
+    st.write('This app helps CPG brands find the perfect contract manufacturer.')
+    if st.button('Let\'s go!'):
+        st.session_state.page += 1
+
 def load_data():
     manufacturers = pd.DataFrame({
         'Name': ['Gar Labs', 'Lily\'s', 'Beauty Private Label', 'Federal Packaging', 'Twincraft', 
@@ -24,25 +32,26 @@ def home_page():
 def input_company_info():
     st.title(emoji.emojize('Enter Your Company Information :memo:'))
     # added placeholders
-    company_name = st.text_input('Company Name', 'Enter Company Name')
-    product_type = st.text_input('Product Type', 'Enter Product Type')
-    segment = st.text_input('Segment', 'Enter Segment')
-    annual_units = st.number_input('Annual Units', 0)
-    website_url = st.text_input('Website URL', 'http://')
-    revenue_last_year = st.number_input('Revenue in the last 12 months ($)', 0)
-    price_per_unit = st.number_input('Price Per Unit ($)', 0)
-    projected_revenue = st.number_input('Projected Revenue for the next 12 months ($)', 0)
-    ideal_monthly_units = st.number_input('Ideal Monthly Units', 0)
-    differentiation = st.text_input('Company Differentiation', 'What sets your company apart?')
-    monthly_revenue = st.number_input('Average Monthly Revenue ($)', 0)
-    monthly_expense = st.number_input('Average Monthly Expense ($)', 0)
+    company_name = st.text_input('Company Name', placeholder='Enter Company Name')
+    product_type = st.text_input('Product Type', placeholder='Enter Product Type')
+    segment = st.text_input('Segment', placeholder='Enter Segment')
+    annual_units = st.number_input('Annual Units', value=0)
+    website_url = st.text_input('Website URL', placeholder='http://')
+    revenue_last_year = st.number_input('Revenue in the last 12 months ($)', value=0)
+    price_per_unit = st.number_input('Price Per Unit ($)', value=0)
+    projected_revenue = st.number_input('Projected Revenue for the next 12 months ($)', value=0)
+    ideal_monthly_units = st.number_input('Ideal Monthly Units', value=0)
+    differentiation = st.text_input('Company Differentiation', placeholder='What sets your company apart?')
+    monthly_revenue = st.number_input('Average Monthly Revenue ($)', value=0)
+    monthly_expense = st.number_input('Average Monthly Expense ($)', value=0)
     if st.button('Submit'):
         st.success(emoji.emojize('Company Info Saved Successfully! :white_check_mark:'))
         st.session_state.page += 1
 
+
 def choose_criteria():
     st.title(emoji.emojize('Choose Your Main Criteria for Manufacturer Selection :mag:'))
-    criteria = st.selectbox('Choose your main criteria', ['MOQ', 'Time', 'Price_per_unit'])
+    criteria = st.selectbox('Choose your main criteria', ['MOQ', 'Time', 'Price_Per_Unit'])
     st.session_state.criteria = criteria
     if st.button('Let\'s see the matches!'):
         st.session_state.page += 1
@@ -63,9 +72,8 @@ def best_match():
 
     st.write('These manufacturers have been chosen based on the lowest values of your selected criteria, '
              'which could translate into lower production costs and faster delivery times for your CPG brand.')
-
-    if st.button('Next'):
-        st.session_state.page += 1
+    if st.button('Back to Home'):
+        st.session_state.page = 0
 
 def manufacturers_list():
     st.title('Manufacturers List')
@@ -74,7 +82,16 @@ def manufacturers_list():
     if st.button('Back to Home'):
         st.session_state.page = 0
 
-PAGES = [home_page, input_company_info, choose_criteria, best_match, manufacturers_list]
+def admin_login():
+    st.title('Admin Login')
+    pwd = st.text_input("Enter Password", type='password')  # Using 'password' as type hides the input
+    if st.button('Login'):
+        if pwd == 'admin_password':  # Replace 'admin_password' with the actual password
+            st.session_state.page += 1
+        else:
+            st.error("The password you entered is incorrect.")
+
+PAGES = [home_page, input_company_info, choose_criteria, best_match, admin_login, manufacturers_list]
 
 def main():
     if 'page' not in st.session_state:
