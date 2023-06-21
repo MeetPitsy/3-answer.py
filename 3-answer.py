@@ -41,6 +41,7 @@ def input_company_info():
     price_per_unit = st.number_input('Price Per Unit ($)', value=0)
     projected_revenue = st.number_input('Projected Revenue for the next 12 months ($)', value=0)
     ideal_monthly_units = st.number_input('Ideal Monthly Units', value=0)
+    monthly_units_sold = st.number_input('Monthly Units Sold', value=0)  # New field
     differentiation = st.text_input('Company Differentiation', placeholder='What sets your company apart?')
     monthly_revenue = st.number_input('Average Monthly Revenue ($)', value=0)
     monthly_expense = st.number_input('Average Monthly Expense ($)', value=0)
@@ -51,7 +52,7 @@ def input_company_info():
 
 def choose_criteria():
     st.title(emoji.emojize('Choose Your Main Criteria for Manufacturer Selection :mag:'))
-    criteria = st.selectbox('Choose your main criteria', ['MOQ', 'Time', 'Price_Per_Unit'])
+    criteria = st.selectbox('Choose your main criteria', ['MOQ', 'Time', 'Price_per_unit'])
     st.session_state.criteria = criteria
     if st.button('Let\'s see the matches!'):
         st.session_state.page += 1
@@ -68,7 +69,10 @@ def best_match():
         manufacturer = sorted_manufacturers.iloc[i]
         st.subheader(f'{i+1}. {manufacturer["Name"]}')
         st.write(f"This manufacturer is one of the top choices based on the {criteria} criteria. "
-                  f"It has {manufacturer[criteria]} {criteria}. You can contact them at {manufacturer['Email']}.")
+                  f"It has {manufacturer[criteria]} {criteria}.")
+        if st.button(f'Contact {manufacturer["Name"]}'):
+            mailto = f'mailto:{manufacturer["Email"]}?subject=Inquiry%20from%20CPG%20Brand%20-%20Manufacturer%20Matching%20App&body=Dear%20{manufacturer["Name"]},%0D%0A%0D%0AI%20found%20your%20company%20on%20the%20CPG%20Brand%20-%20Manufacturer%20Matching%20App.%20Could%20you%20please%20provide%20me%20with%20more%20information%20about%20your%20services?%0D%0A%0D%0AThank%20you.'
+            st.markdown(f'<a href="{mailto}" target="_blank">Email {manufacturer["Name"]}</a>', unsafe_allow_html=True)
 
     st.write('These manufacturers have been chosen based on the lowest values of your selected criteria, '
              'which could translate into lower production costs and faster delivery times for your CPG brand.')
