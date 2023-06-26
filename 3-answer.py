@@ -13,13 +13,19 @@ def home_page():
 def load_data():
     manufacturers = pd.DataFrame({
         'Name': ['Gar Labs', 'Lily\'s', 'Beauty Private Label', 'Federal Packaging', 'Twincraft', 
-                 'Coughlin Companies', 'Sinoscan', 'KKT', 'Goodkind Co'],
-        'MOQ': [5000, 10000, 3000, 5000, 15000, 5000, 10000, 5000, 10000],
-        'Time': [14, 16, 12, 15, 20, 14, 16, 15, 17],
-        'Price_per_unit': [2.00, 5.50, 4.50, 5.00, 2.50, 4.50, 3.50, 5.00, 3.00],
+                 'Coughlin Companies', 'Sinoscan', 'KKT', 'Goodkind Co', 'Botanic Beauty Labs', 
+                 'Essential Wholesale', 'Genie Supply', 'Glow Essential Labs'],
+        'MOQ': [5000, 10000, 3000, 5000, 15000, 5000, 10000, 5000, 10000, 1000, 1000, None, 500],
+        'Time': [14, 16, 12, 15, 20, 14, 16, 15, 17, None, None, None, None],
+        'Price_per_unit': [2.00, 5.50, 4.50, 5.00, 2.50, 4.50, 3.50, 5.00, 3.00, 4.50, None, None, 3.00],
         'Email': ['tom@garlabs.com', 'hello@moesgroup.org', 'Sales@bqgmanufacturing.com', 'info@federalpackage.com', 
                   'jackson.berman@twincraft.com', 'info@contactcoghlin.com', 'info@sinoscan.com', 'krupa@kktconsultants.com', 
-                  'info@nutracapusa.com']
+                  'info@nutracapusa.com', None, None, None, None],
+        'Comments': ['Best so far, we have to provide packaging, and transport for shipping...', 
+                     None, None, 'Injection molding, customer supplied containers, labeling, screen printing',
+                     'Base strategy of library of formulas that are then customized. Small handful of bases ready to be scaled up.',
+                     None, None, None, None, None, '10 gallon minimum order of customization formulation but did offer 500-1000 units in filling', 
+                     None, 'Timeline for quote day or two - foundation of raw material (1-2 weeks to approving sample manufacturing is 3-4 weeks) Projections and forecast of amount of units to help lead times']
     })
     return manufacturers
 
