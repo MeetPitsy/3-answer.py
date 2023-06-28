@@ -1,3 +1,6 @@
-streamlit
-pandas
-emoji
+import os
+import json
+import streamlit as st
+import pandas as pd
+import emoji
+from deta import Deta
